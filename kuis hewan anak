@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Hewan untuk Anak-Anak</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #007BFF;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #E3F2FD;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        img {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Quiz Hewan Seru!</h1>
+
+<div class="quiz-container">
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div id="feedback" class="feedback" style="display:none;"></div>
+    <button id="next-btn" style="display:none;">Lanjut</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: "Hewan apa yang bisa terbang dan berkicau?",
+            options: ["A. Gajah", "B. Burung", "C. Ikan", "D. Kucing"],
+            answer: "B",
+            image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?w=200&h=200&fit=crop"
+        },
+        {
+            question: "Di mana singa biasanya tinggal?",
+            options: ["A. Laut", "B. Hutan", "C. Padang rumput", "D. Gunung"],
+            answer: "C",
+            image: "https://images.unsplash.com/photo-1544568100-847a948585b9?w=200&h=200&fit=crop"
+        },
+        {
+            question: "Hewan apa yang hidup di air dan bernapas dengan insang?",
+            options: ["A. Ayam", "B. Ikan", "C. Kuda", "D. Anjing"],
+            answer: "B",
+            image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&h=200&fit=crop"
+        },
+        {
+            question: "Suara apa yang dikeluarkan oleh kucing?",
+            options: ["A. Meong", "B. Woof", "C. Moo", "D. Quack"],
+            answer: "A",
+            image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&h=200&fit=crop"
+        },
+        {
+            question: "Hewan apa yang punya belalai panjang?",
+            options: ["A. Harimau", "B. Gajah", "C. Monyet", "D. Kelinci"],
+            answer: "B",
+            image: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=200&h=200&fit=crop"
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const feedbackEl = document.getElementById("feedback");
+    const nextBtn = document.getElementById("next-btn");
+
+    function loadQuestion() {
+        const q = questions[currentQuestionIndex];
+        questionEl.textContent = q.question;
+        optionsEl.innerHTML = "";
+        feedbackEl.style.display = "none";
+        nextBtn.style.display = "none";
+
+        q.options.forEach(option => {
+            const btn = document.createElement("button");
+            btn.textContent = option;
+            btn.onclick = () => checkAnswer(option.charAt(0));
+            optionsEl.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected) {
+        const q = questions[currentQuestionIndex];
+        if (selected === q.answer) {
+            feedbackEl.textContent = "Benar! Kamu hebat! 🎉";
+            feedbackEl.style.color = "green";
+        } else {
+            feedbackEl.textContent = "Salah, coba lagi 😢";
+            feedbackEl.style.color = "red";
+        }
+        feedbackEl.innerHTML += `<br><img src="${q.image}" alt="Hewan">`;
+        feedbackEl.style.display = "block";
+        nextBtn.style.display = "inline-block";
+    }
+
+    nextBtn.onclick = () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            loadQuestion();
+        } else {
+            questionEl.textContent = "Quiz selesai! Terima kasih sudah bermain 🥰";
+            optionsEl.innerHTML = "";
+            feedbackEl.style.display = "none";
+            nextBtn.style.display = "none";
+        }
+    };
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
